@@ -2,12 +2,11 @@ import requests
 import os
 from dotenv import load_dotenv
 from  jsonschema import validate
-from core.settings.contracts import BOOKING_SCHEME
 from core.settings.environments import Environment
 from core.clients.endpoints import Endpoints
 from core.settings.config import Users, Timeouts
 import allure
-import core.settings.contracts
+
 load_dotenv()
 
 @allure.suite("тест")
