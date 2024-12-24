@@ -1,14 +1,17 @@
 import requests
 import os
 from dotenv import load_dotenv
+from  jsonschema import validate
+from core.settings.contracts import BOOKING_SCHEME
 from core.settings.environments import Environment
 from core.clients.endpoints import Endpoints
 from core.settings.config import Users, Timeouts
 import allure
-
+import core.settings.contracts
 load_dotenv()
 
-
+@allure.suite("тест")
+@allure.title("тестт")
 class APIClient:
     def __init__(self):
         environment_str = os.getenv('ENVIRONMENT')
@@ -60,9 +63,9 @@ class APIClient:
     @allure.title("тестт")
     def auth(self):
         with allure.step("Getting authenticate"):
-            url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT}"
-            payload = {"username": Users.USERNAME, "password": Users.PASSWORD}
-            response = self.sessions.post(url, json=payload, timeout=Timeouts.TIMEOUT)
+            url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
+            payload = {"username": Users.USERNAME.value, "password": Users.PASSWORD.value}
+            response = self.sessions.post(url, json=payload, timeout=Timeouts.TIMEOUT.value)
             response.raise_for_status()
         with allure.step("Assert status code"):
             assert response.status_code == 200, f"Expected status 200 but got{response.status_code}"
@@ -70,13 +73,15 @@ class APIClient:
         with allure.step("Updating header with authorization"):
             self.sessions.headers.update({"Authorization": f"Bearer {token}"})
 
-    @allure.suite("тест")
-    @allure.title("тестт")
     def get_booking_by_id(self):
+        self.sessions.headers.update({"Accept":"application/json"})
         with allure.step("Get booking by id"):
-            url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT}/1"
-            response = self.sessions.get(url, timeout=Timeouts.TIMEOUT)
-        return print("sad")
+            url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}/1"
+            response = self.sessions.get(url)
+
+            print(self.sessions.headers)
+            print(url,response.json())
 
 client = APIClient()
 client.auth()
+client.get_booking_by_id()
