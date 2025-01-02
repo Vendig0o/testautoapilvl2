@@ -10,7 +10,7 @@ def api_client():
     return client
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def booking_dates():
     today = datetime.today()
     checkin_date = today + timedelta(days=10)
@@ -21,7 +21,7 @@ def booking_dates():
         "checkout": checkout_date.strftime("%Y-%m-%d")
     }
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def generate_random_booking_data(booking_dates):
     faker = Faker()
     firstname = faker.first_name()
