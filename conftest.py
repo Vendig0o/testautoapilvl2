@@ -32,7 +32,7 @@ def generate_random_booking_data(booking_dates):
 
     data = {
         "firstname": firstname,
-        "Lastname": lastname,
+        "lastname": lastname,
         "totalprice": totalprice,
         "depositpaid": depositpaid,
         "bookingdates": booking_dates,

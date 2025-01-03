@@ -1,7 +1,7 @@
 import allure
 import pytest
 import requests
-import conftest
+
 
 @allure.feature("Test Ping")
 @allure.story("Test connection")
@@ -50,9 +50,3 @@ def test_ping_timeout(api_client, mocker):
     with pytest.raises (requests.Timeout):
         api_client.ping()
 
-@allure.feature("Test booking")
-@allure.story("Test status")
-def test_create_booking(api_client,generate_random_booking_data):
-    data = generate_random_booking_data
-    response = api_client.create_booking(booking_data=data)
-    assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"

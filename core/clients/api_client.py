@@ -9,7 +9,6 @@ from core.settings.config import Users, Timeouts
 import allure
 load_dotenv()
 
-
 class APIClient:
     def __init__(self):
         environment_str = os.getenv('ENVIRONMENT')
